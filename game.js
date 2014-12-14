@@ -10,14 +10,13 @@ function Game() {
 	this.Points;
 	this.Map;
 	
-	this.Reset = function(pts = 0) {
+	this.Reset = function(pts) {
 		var artifact_pos = {
 			x: Math.floor((new Date().getTime() + Math.random() * 1000) % this.Bounds.x),
 			y: Math.floor((new Date().getTime() - Math.random() * 1000) % this.Bounds.y)
 		}
-		console.log(artifact_pos);
 		this.Map = {};
-		this.Points = pts;
+		this.Points = typeof(pts) !== 'undefined' ? pts : 0;
 		
 		$("#points").text(this.Points);
 		$("#gameWindow").html("");
@@ -59,7 +58,6 @@ function Game() {
 	}
 	
 	this.Nothing = function(id) {
-	console.log(id);
 		$("#" + id).text("OK");
 		$("#" + id).css({background: "#00FF00"});
 		$("#" + id).unbind("click");
