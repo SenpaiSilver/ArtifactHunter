@@ -53,12 +53,15 @@ function Game() {
 					anomalies++;
 			$("#gameWindow").append('<div class="field-info" id="field-info-x-' + x + '">' + anomalies + '</div>');
 		}
+		$("#gameWindow").append('<div class="field-info" id="field-reset">R</div>');
 		$("#gameWindow").append('<hr />');
+		$("#field-reset").click(function() {Game.Reset()});
 	}
 	
 	this.Nothing = function(id) {
 	console.log(id);
 		$("#" + id).text("OK");
+		$("#" + id).css({background: "#00FF00"});
 		$("#" + id).unbind("click");
 		$("#points").text(Game.Points += 10);
 	}
@@ -69,7 +72,13 @@ function Game() {
 	}
 	
 	this.Lose = function(id) {
-		//$("#"+id).text("X");
+		$("#" + id).text("X");
+		$("#" + id).css({background: "#FF0000"});
+		for (var y = 0; y < this.Bounds.y; ++y)
+			for (var x = 0; x < this.Bounds.y; ++x) {
+				var fieldid = 'field-' + x + '-' + y
+				$("#" + fieldid).unbind("click");
+			}
 		alert("You lose.");
 		this.Reset();
 	}
