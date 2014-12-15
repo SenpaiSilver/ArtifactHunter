@@ -18,3 +18,4 @@ To-Do
 - [ ] Add nice pictures
 - [ ] Add the rules
 - [ ] Add a share button
+- [ ] Add drops
