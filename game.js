@@ -8,6 +8,7 @@ function Game() {
 		"Artifact": [0, 2, function(id) {Game.NextLevel(id.data);}]
 	};
 	this.Points;
+	this.Level;
 	this.Map;
 	
 	this.Reset = function(pts) {
@@ -16,9 +17,10 @@ function Game() {
 			y: Math.floor((new Date().getTime() - Math.random() * 1000) % this.Bounds.y)
 		}
 		this.Map = {};
-		this.Points = typeof(pts) !== 'undefined' ? pts : 0;
+		this.Points = (typeof(pts) !== 'undefined' ? pts : 0);
+		this.Level = (typeof(pts) !== 'undefined' ? this.Level + 1 : 1);
 		
-		$("#points").text(this.Points);
+		$("#points").text("[Level " + this.Level + "] " + this.Points + "pts");
 		$("#gameWindow").html("");
 		for (var y = 0; y < this.Bounds.y; ++y) {
 			var anomalies = 0;
@@ -61,10 +63,11 @@ function Game() {
 		$("#" + id).text("OK");
 		$("#" + id).css({background: "#00FF00"});
 		$("#" + id).unbind("click");
-		$("#points").text(Game.Points += 10);
+		$("#points").text("Level [" + this.Level + "] " + (this.Points += 10) + "pts");
 	}
 	this.NextLevel = function(id) {
-		$("#points").text(Game.Points += 100);
+		
+		$("#points").text("Level " + this.Level + " " + (this.Points += 100) + "pts");
 		alert("You stumbled upon the artifact!");
 		this.Reset(this.Points);
 	}
@@ -76,9 +79,10 @@ function Game() {
 			for (var x = 0; x < this.Bounds.y; ++x) {
 				var fieldid = 'field-' + x + '-' + y
 				$("#" + fieldid).unbind("click");
+				if (fieldid != id)
+					$("#" + fieldid).css({background: "#C0C0C0"});
 			}
-		alert("You lose.");
-		this.Reset();
+		$("#points").html('You died! <a href="https://twitter.com/intent/tweet?button_hashtag=ArtifactHunt&text=I%20have%20scored%20{:points:}pts%20at%20%23ArtifactHunt%20(http%3A%2F%2Fartifacthunter.senpaisilver.com%2F)" class="twitter-hashtag-button" data-related="SenpaiSilver" data-url="http://artifacthunter.senpaisilver.com/">Tweet your score('.replace('{:points:}', this.Points) + this.Points + 'pts)</a>?');
 	}
 	
 	this.Reset();

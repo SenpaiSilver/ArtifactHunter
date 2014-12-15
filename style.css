@@ -69,6 +69,3 @@ hr {
 	margin-right: auto;
 	text-align: center;
 }
-#points:after {
-	content: "pts";
-}
