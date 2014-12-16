@@ -20,6 +20,7 @@ function Game() {
 		this.Points = (typeof(pts) !== 'undefined' ? pts : 0);
 		this.Level = (typeof(pts) !== 'undefined' ? this.Level + 1 : 1);
 		
+		$(".popup").hide();
 		$("#points").text("[Level " + this.Level + "] " + this.Points + "pts");
 		$("#gameWindow").html("");
 		for (var y = 0; y < this.Bounds.y; ++y) {
@@ -89,7 +90,7 @@ function Game() {
 				if (fieldid != id)
 					$("#" + fieldid).css({background: "#C0C0C0"});
 			}
-		$("#points").html('You died! <a href="https://twitter.com/intent/tweet?button_hashtag=ArtifactHunt&text=I%20have%20scored%20{:points:}pts%20at%20%23ArtifactHunt%20(http%3A%2F%2Fartifacthunter.senpaisilver.com%2F)" class="twitter-hashtag-button" data-related="SenpaiSilver" data-url="http://artifacthunter.senpaisilver.com/">Tweet your score('.replace('{:points:}', this.Points) + this.Points + 'pts)</a>?');
+		$("#sharing").append('<a href="https://twitter.com/intent/tweet?button_hashtag=ArtifactHunt&text=I%20have%20scored%20{:points:}pts%20at%20%23ArtifactHunt%20(http%3A%2F%2Fartifacthunter.senpaisilver.com%2F)" class="twitter-hashtag-button" data-related="SenpaiSilver" data-url="http://artifacthunter.senpaisilver.com/">Twitter</a>'.replace('{:points:}', this.Points));
 	}
 	
 	this.Reset();
