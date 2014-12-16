@@ -20,7 +20,10 @@ function Game() {
 		this.Points = (typeof(pts) !== 'undefined' ? pts : 0);
 		this.Level = (typeof(pts) !== 'undefined' ? this.Level + 1 : 1);
 		
-		$(".popup").hide();
+		$(".lost-popup").hide();
+		$(".win-popup").hide();
+		$(".info-popup").hide();
+		
 		$("#points").text("[Level " + this.Level + "] " + this.Points + "pts");
 		$("#gameWindow").html("");
 		for (var y = 0; y < this.Bounds.y; ++y) {
@@ -65,11 +68,14 @@ function Game() {
 		$("#" + id).css({background: "#00FF00"});
 		$("#" + id).unbind("click");
 		$("#points").text("Level [" + this.Level + "] " + (this.Points += 10) + "pts");
+		$(".info-popup").show();
+		// Implement some kind of bonus
+		$(".info-popup").hide();
 	}
 	this.NextLevel = function(id) {
 		$("#" + id).text("@");
 		$("#" + id).css({background: "#0000FF"});
-		$("#points").text("Level " + this.Level + " " + (this.Points += 100) + "pts");
+		$("#points").text("[Level " + this.Level + "] " + (this.Points += 100) + "pts");
 		for (var y = 0; y < this.Bounds.y; ++y)
 			for (var x = 0; x < this.Bounds.y; ++x) {
 				var fieldid = 'field-' + x + '-' + y
@@ -77,7 +83,8 @@ function Game() {
 				if (fieldid != id)
 					$("#" + fieldid).css({background: "#C0C0C0"});
 			}
-		window.setTimeout(function() {Game.Reset(Game.Points);}, 1000);
+		$(".win-popup").show();
+		window.setTimeout(function() {Game.Reset(Game.Points);$(".win-popup").hide();}, 2000);
 	}
 	
 	this.Lose = function(id) {
@@ -90,7 +97,9 @@ function Game() {
 				if (fieldid != id)
 					$("#" + fieldid).css({background: "#C0C0C0"});
 			}
-		$("#sharing").append('<a href="https://twitter.com/intent/tweet?button_hashtag=ArtifactHunt&text=I%20have%20scored%20{:points:}pts%20at%20%23ArtifactHunt%20(http%3A%2F%2Fartifacthunter.senpaisilver.com%2F)" class="twitter-hashtag-button" data-related="SenpaiSilver" data-url="http://artifacthunter.senpaisilver.com/">Twitter</a>'.replace('{:points:}', this.Points));
+		
+		$(".lost-popup").show();
+		$(".lost-popup").html('You died! <a href="https://twitter.com/intent/tweet?button_hashtag=ArtifactHunter&text=I%20have%20scored%20{:points:}pts%20at%20%23ArtifactHunter%20(http%3A%2F%2Fartifacthunter.senpaisilver.com%2F)" class="twitter-hashtag-button" data-related="SenpaiSilver" data-url="http://artifacthunter.senpaisilver.com/"> Share your score on Twitter ?</a>'.replace('{:points:}', this.Points));
 	}
 	
 	this.Reset();
