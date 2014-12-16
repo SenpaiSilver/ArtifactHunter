@@ -17,5 +17,5 @@ To-Do
 - [ ] Create a design
 - [ ] Add nice pictures
 - [ ] Add the rules
-- [ ] Add a share button
+- [x] Add a share button
 - [ ] Add drops

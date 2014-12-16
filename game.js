@@ -28,7 +28,7 @@ function Game() {
 				var fieldid = 'field-' + x + '-' + y
 				
 				$("#gameWindow").append('<div class="field" id="' + fieldid + '">?</div>');
-				if (y == artifact_pos.y && x == artifact_pos.x)
+				if (y === artifact_pos.y && x === artifact_pos.x)
 				{
 					this.Map[fieldid] = this.Items["Artifact"];
 					$("#"+fieldid).click(fieldid, this.Items["Artifact"][2]);
@@ -50,7 +50,7 @@ function Game() {
 		for (var x = 0; x < this.Bounds.x; ++x) {
 			var anomalies = 0;
 			for (var y = 0; y < this.Bounds.y; ++y)
-				if (this.Map['field-' + x + '-' + y][1] == this.Items["Anomaly"][1])
+				if (this.Map['field-' + x + '-' + y][1] === this.Items["Anomaly"][1])
 					anomalies++;
 			$("#gameWindow").append('<div class="field-info" id="field-info-x-' + x + '">' + anomalies + '</div>');
 		}
@@ -66,10 +66,17 @@ function Game() {
 		$("#points").text("Level [" + this.Level + "] " + (this.Points += 10) + "pts");
 	}
 	this.NextLevel = function(id) {
-		
+		$("#" + id).text("@");
+		$("#" + id).css({background: "#0000FF"});
 		$("#points").text("Level " + this.Level + " " + (this.Points += 100) + "pts");
-		alert("You stumbled upon the artifact!");
-		this.Reset(this.Points);
+		for (var y = 0; y < this.Bounds.y; ++y)
+			for (var x = 0; x < this.Bounds.y; ++x) {
+				var fieldid = 'field-' + x + '-' + y
+				$("#" + fieldid).unbind("click");
+				if (fieldid != id)
+					$("#" + fieldid).css({background: "#C0C0C0"});
+			}
+		window.setTimeout(function() {Game.Reset(Game.Points);}, 1000);
 	}
 	
 	this.Lose = function(id) {
@@ -86,4 +93,8 @@ function Game() {
 	}
 	
 	this.Reset();
+	$(document).keydown(function(e) {
+		if (e.key == 'r')
+			Game.Reset();
+	});
 }
