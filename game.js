@@ -67,7 +67,7 @@ function Game() {
 		$("#" + id).text("OK");
 		$("#" + id).css({background: "#00FF00"});
 		$("#" + id).unbind("click");
-		$("#points").text("Level [" + this.Level + "] " + (this.Points += 10) + "pts");
+		$("#points").text("[Level " + this.Level + "] " + (this.Points += 10) + "pts");
 		$(".info-popup").show();
 		// Implement some kind of bonus
 		$(".info-popup").hide();
